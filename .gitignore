@@ -1,0 +1,17 @@
+# Dependências — nunca versionar esta pasta
+node_modules
+
+# Build de produção
+dist
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variáveis de ambiente (quando houver)
+.env
+.env.local
