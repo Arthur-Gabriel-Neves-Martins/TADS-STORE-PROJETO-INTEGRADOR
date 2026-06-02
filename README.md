@@ -26,20 +26,22 @@ Acesse `http://localhost:5173` no navegador.
 
 ### Etapa 1 — Componentização (Semana 12)
 - [x] Projeto criado com Vite + React
-- [x] Componente `Layout` com `props.children` (Cabeçalho + miolo + Rodapé)
-- [x] Componente `Cabecalho` recebendo `titulo` via prop
-- [x] Componente `Rodape` com nome do desenvolvedor e ano dinâmico
-- [x] Componente `Vitrine` com array de 6 produtos renderizados via `.map()`
-- [x] Componente `ProdutoCard` montado por composição (`Selo` + `Botao`)
-- [x] Componente `Botao` genérico com valores padrão (`texto`, `cor`)
-- [x] Componente `Selo` genérico com valores padrão (`cor`)
-- [x] Renderização condicional: selo "Frete grátis", "Últimas unidades" e "Esgotado"
-- [x] Preços formatados em Real Brasileiro com `toLocaleString`
-- [x] Prop `key` em todos os itens do `.map()`
-- [x] Identidade visual própria (tema escuro, acento ciano, nome "TechHub Store")
+- [x] Componente `Layout` com `props.children`
+- [x] Componentes `Cabecalho`, `Rodape`, `Vitrine`, `ProdutoCard`, `Botao`, `Selo`
+- [x] Composição: `ProdutoCard` montado com `Selo` + `Botao`
+- [x] Dados em array com `.map()` e `key`
+- [x] Renderização condicional
+- [x] Identidade visual própria (TechHub Store)
 
 ### Etapa 2 — Estado, Hooks e API (Semana 13)
-- [ ] Em desenvolvimento
+- [x] Produtos carregados da API DummyJSON via `useEffect` + `fetch`
+- [x] Estado de carregando (spinner animado)
+- [x] Estado de erro com mensagem amigável
+- [x] `ProdutoCard` exibindo `title`, `price` e `thumbnail` da API
+- [x] Campo de busca controlado com `useState`
+- [x] Filtro por categoria via `<select>`
+- [x] Mensagem "Nenhum produto encontrado" quando busca não retorna resultados
+- [x] `BotaoFavorito` com estado local por card
 
 ### Etapa 3 — Navegação SPA (Semana 14)
 - [ ] Em desenvolvimento
@@ -55,29 +57,26 @@ Acesse `http://localhost:5173` no navegador.
 tads-store/
 ├── src/
 │   ├── components/
-│   │   ├── Layout.jsx       # Embrulho com children: Cabeçalho + main + Rodapé
-│   │   ├── Cabecalho.jsx    # Topo da loja (recebe prop "titulo")
-│   │   ├── Rodape.jsx       # Rodapé com nome do dev e ano
-│   │   ├── Vitrine.jsx      # Lista de produtos com .map()
-│   │   ├── ProdutoCard.jsx  # Card composto por Selo e Botao
-│   │   ├── Botao.jsx        # Botão genérico e reutilizável
-│   │   └── Selo.jsx         # Etiqueta genérica e reutilizável
-│   ├── App.jsx              # <Layout><Vitrine /></Layout>
-│   ├── App.css              # Estilos com variáveis CSS (tema TechHub)
-│   └── main.jsx             # Ponto de entrada do React
+│   │   ├── Layout.jsx
+│   │   ├── Cabecalho.jsx
+│   │   ├── Rodape.jsx
+│   │   ├── Vitrine.jsx       ← useEffect + fetch + busca + filtro
+│   │   ├── ProdutoCard.jsx   ← campos da API + BotaoFavorito
+│   │   ├── BotaoFavorito.jsx ← useState local por card
+│   │   ├── Botao.jsx
+│   │   └── Selo.jsx
+│   ├── App.jsx
+│   ├── App.css
+│   └── main.jsx
 ├── index.html
-├── vite.config.js
-├── .gitignore
 └── README.md
 ```
 
 ---
 
-## Tecnologias utilizadas
+## API utilizada
 
-- [React 18](https://react.dev/)
-- [Vite 4](https://vitejs.dev/)
-- CSS com variáveis customizadas (`--cor-acento`, `--cor-fundo`, etc.)
+[DummyJSON](https://dummyjson.com) — API REST pública, gratuita e sem necessidade de chave.
 
 ---
 

@@ -1,47 +1,68 @@
-// ProdutoCard.jsx
-// Recebe um objeto "produto" inteiro como prop e o desestrutura internamente.
-// É montado por composição: usa Selo e Botao como peças menores.
+// ProdutoCard.jsx — Etapa 2
+// Adaptado para os campos da API DummyJSON: title, price, thumbnail, category.
+// Agora também inclui o BotaoFavorito (useState local por card).
 
 import Botao from "./Botao";
 import Selo from "./Selo";
+import BotaoFavorito from "./BotaoFavorito";
 
 function ProdutoCard({ produto }) {
-  // Desestruturando o objeto produto para acessar cada campo individualmente
-  const { nome, preco, freteGratis, categoria, avaliacao, estoque } = produto;
+  // A API DummyJSON usa nomes em inglês — desestruturamos com os nomes corretos
+  const { title, price, thumbnail, category, rating, stock, discountPercentage } = produto;
 
-  // Formata o preço em Real Brasileiro (ex: R$ 3.499,90)
-  const precoFormatado = preco.toLocaleString("pt-BR", {
+  // Formata o preço em Real Brasileiro
+  const precoFormatado = price.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
 
   return (
     <article className="produto-card">
-      {/* Cabeçalho do card com categoria */}
-      <div className="produto-card__categoria">{categoria}</div>
-
-      {/* Nome do produto */}
-      <h3 className="produto-card__nome">{nome}</h3>
-
-      {/* Avaliação em estrelas */}
-      <div className="produto-card__avaliacao">
-        {"★".repeat(Math.floor(avaliacao))}
-        {"☆".repeat(5 - Math.floor(avaliacao))}
-        <span className="avaliacao-numero"> {avaliacao}</span>
+      {/* Imagem do produto vinda da API */}
+      <div className="produto-card__imagem-wrapper">
+        <img
+          src={thumbnail}
+          alt={title}
+          className="produto-card__imagem"
+        />
+        {/* Selo de desconto condicional */}
+        {discountPercentage >= 10 && (
+          <span className="produto-card__desconto">
+            -{Math.round(discountPercentage)}%
+          </span>
+        )}
       </div>
 
-      {/* Preço formatado */}
+      {/* Categoria */}
+      <div className="produto-card__categoria">{category}</div>
+
+      {/* Título do produto */}
+      <h3 className="produto-card__nome">{title}</h3>
+
+      {/* Avaliação */}
+      <div className="produto-card__avaliacao">
+        {"★".repeat(Math.floor(rating))}
+        {"☆".repeat(5 - Math.floor(rating))}
+        <span className="avaliacao-numero"> {rating}</span>
+      </div>
+
+      {/* Preço */}
       <p className="produto-card__preco">{precoFormatado}</p>
 
-      {/* Selos condicionais: só aparecem quando as condições são verdadeiras */}
+      {/* Selos condicionais */}
       <div className="produto-card__selos">
-        {freteGratis && <Selo texto="Frete grátis" cor="verde" />}
-        {estoque <= 5 && estoque > 0 && <Selo texto="Últimas unidades" cor="laranja" />}
-        {estoque === 0 && <Selo texto="Esgotado" cor="vermelho" />}
+        {stock === 0 && <Selo texto="Esgotado" cor="vermelho" />}
+        {stock > 0 && stock <= 5 && <Selo texto="Últimas unidades" cor="laranja" />}
       </div>
 
-      {/* Botão de ação — usa o componente genérico Botao */}
-      <Botao texto={estoque === 0 ? "Indisponível" : "Comprar agora"} cor={estoque === 0 ? "desabilitado" : "primaria"} />
+      {/* Ações do card */}
+      <div className="produto-card__acoes">
+        <Botao
+          texto={stock === 0 ? "Indisponível" : "Comprar agora"}
+          cor={stock === 0 ? "desabilitado" : "primaria"}
+        />
+        <BotaoFavorito />
+      </div>
     </article>
   );
 }
