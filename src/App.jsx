@@ -1,16 +1,29 @@
-// App.jsx
-// Componente raiz da aplicação.
-// O Layout "embrulha" a Vitrine via props.children,
-// garantindo que cabeçalho e rodapé apareçam em todas as telas.
+// App.jsx — Etapa 3
+// Configuração do React Router: BrowserRouter envolve tudo,
+// Routes define as rotas disponíveis na aplicação.
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Vitrine from "./components/Vitrine";
+import Home from "./pages/Home";
+import Detalhe from "./pages/Detalhe";
+import NaoEncontrado from "./pages/NaoEncontrado";
 
 function App() {
   return (
-    <Layout>
-      <Vitrine />
-    </Layout>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          {/* Rota principal: lista de produtos */}
+          <Route path="/" element={<Home />} />
+
+          {/* Rota dinâmica: detalhe do produto — :id vem da URL */}
+          <Route path="/produto/:id" element={<Detalhe />} />
+
+          {/* Rota 404: qualquer caminho não mapeado */}
+          <Route path="*" element={<NaoEncontrado />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
